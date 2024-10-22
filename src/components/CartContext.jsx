@@ -5,25 +5,27 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
-  const addToCart = (product) => {
+  function addToCart(product) {
     setCart((prev) => [...prev, product]);
-  };
+  }
 
-  const removeFromCart = (id, color) => {
+  function removeFromCart(id, color) {
     setCart((prev) => {
       return prev.filter((item) => !(item.id === id && item.color === color));
     });
-  };
+  }
 
   useEffect(() => {
-    const storedCart = localStorage.getItem("cart");
+    const storedCart = localStorage.getItem("data");
+    console.log(20, storedCart);
+
     if (storedCart) {
       setCart(JSON.parse(storedCart));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("data", JSON.stringify(cart));
   }, [cart]);
 
   return (

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { http } from "../axios";
 import { useNavigate } from "react-router-dom";
+import { RingLoader } from "react-spinners";
 
 function Products() {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
+    setLoader(true);
     http
       .get(`products`)
       .then((data) => {
@@ -14,6 +17,9 @@ function Products() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoader(false);
       });
   }, []);
 
@@ -23,6 +29,11 @@ function Products() {
 
   return (
     <div className="flex flex-wrap justify-center gap-6 p-6">
+      {loader && (
+        <div className="mt-5">
+          <RingLoader></RingLoader>
+        </div>
+      )}
       {products.length > 0 &&
         products.map((product) => {
           return (

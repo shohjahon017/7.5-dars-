@@ -5,23 +5,24 @@ function Cart() {
   const { cart, setCart } = useContext(CartContext);
   const token = localStorage.getItem("token");
 
-  const removeFromCart = (id, color) => {
+  function removeFromCart(id, color) {
     setCart((prev) =>
       prev.filter((item) => !(item.id === id && item.color === color))
     );
-  };
+  }
 
-  const handleChangeCount = (count, id, color) => {
+  function handleChangeAmount(count, id, color) {
     let copied = [...cart];
     copied = copied.map((value) => {
-      if (value.id === id && value.color === color) {
+      if (value.id == id && value.color == color) {
         value.amount = Number(count);
       }
       return value;
     });
+
     setCart(copied);
-    localStorage.setItem("cart", JSON.stringify(copied));
-  };
+    localStorage.setItem("data", JSON.stringify(copied));
+  }
 
   return (
     <div className="container mx-auto">
@@ -52,7 +53,7 @@ function Cart() {
                 className="border p-1 rounded-lg "
                 value={value.amount}
                 onChange={(e) =>
-                  handleChangeCount(e.target.value, value.id, value.color)
+                  handleChangeAmount(e.target.value, value.id, value.color)
                 }
               >
                 <option value={1}>1</option>
@@ -75,11 +76,6 @@ function Cart() {
         ))
       ) : (
         <p></p>
-      )}
-      {token ? (
-        <button>PROCEED TO CHECKOUT</button>
-      ) : (
-        <button>PLEASE LOGIN</button>
       )}
     </div>
   );

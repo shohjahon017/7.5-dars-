@@ -3,12 +3,16 @@ import { ThemeContext } from "../components/Theme";
 import Carosel from "../components/Carosel";
 import { http } from "../axios";
 import { useNavigate } from "react-router-dom";
+import { RingLoader } from "react-spinners";
+
 function Home() {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
+    setLoader(true);
     http
       .get("products?featured=true")
       .then((data) => {
@@ -16,6 +20,9 @@ function Home() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoader(false);
       });
   }, []);
   function handleClick(e) {
@@ -32,6 +39,11 @@ function Home() {
         theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
       }`}
     >
+      {loader && (
+        <div className="justify-center flex mt-10">
+          <RingLoader></RingLoader>
+        </div>
+      )}
       <div className=" flex gap-10">
         <div className="mt-20 ml-44 ">
           <h1 className="max-w-2xl text-4xl font-bold tracking-tight text-gray-600 sm:text-6xl">

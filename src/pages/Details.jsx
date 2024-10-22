@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { http } from "../axios";
 import { CartContext } from "../components/CartContext";
+import { RingLoader } from "react-spinners";
 
 function Details() {
   const [product, setProduct] = useState({});
@@ -9,8 +10,10 @@ function Details() {
   const [amount, setAmount] = useState(1);
   const { id } = useParams();
   const { cart, setCart } = useContext(CartContext);
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
+    setLoader(true);
     http
       .get(`products/${id}`)
       .then((data) => {
@@ -21,6 +24,9 @@ function Details() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoader(false);
       });
   }, [id]);
 
@@ -57,11 +63,16 @@ function Details() {
   };
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("data", JSON.stringify(cart));
   }, [cart]);
 
   return (
     <div className="container mx-auto my-40 ">
+      {loader && (
+        <div className="flex justify-center">
+          <RingLoader></RingLoader>
+        </div>
+      )}
       {product.id && (
         <div className="flex gap-10">
           <img
