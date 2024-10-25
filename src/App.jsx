@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";                                       
 import { ThemeContext } from "./components/Theme";
 import { CartProvider } from "./components/CartContext";
 import Home from "./pages/Home";

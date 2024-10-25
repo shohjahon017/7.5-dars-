@@ -1,12 +1,13 @@
 import React, { useRef, useState } from "react";
 import { http } from "../axios";
+import { useNavigate, Link } from "react-router-dom";
 
 function Register() {
   const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const [data, setData] = useState([]);
-  // const
+  const navigate = useNavigate();
 
   function handleRegister(e) {
     e.preventDefault();
@@ -16,10 +17,16 @@ function Register() {
       email: emailRef.current.value,
       password: passwordRef.current.value,
     };
+
     http
-      .get("auth/local/register")
-      .then((data) => {
-        if (data.status == 200) {
+      .post("/auth/local/register", user, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          navigate("/login");
         }
       })
       .catch((err) => {
@@ -29,8 +36,7 @@ function Register() {
 
   return (
     <div className="container mx-auto justify-center flex mt-10">
-      <h3>Register</h3>
-      <form className="flex flex-col w-1/4    ">
+      <form className="flex flex-col w-1/4" onSubmit={handleRegister}>
         <input
           ref={usernameRef}
           className="border rounded-lg p-2 mt-2"
@@ -51,10 +57,13 @@ function Register() {
         />
         <button
           className="mt-2 p-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600"
-          onClick={handleRegister}
+          type="submit"
         >
           Register
         </button>
+        <Link to="/login" className="text-blue-500">
+          Login ga o'tish
+        </Link>
       </form>
     </div>
   );

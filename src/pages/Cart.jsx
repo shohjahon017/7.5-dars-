@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import { CartContext } from "../components/CartContext";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
   const { cart, setCart } = useContext(CartContext);
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   function removeFromCart(id, color) {
     setCart((prev) =>
@@ -22,6 +24,9 @@ function Cart() {
 
     setCart(copied);
     localStorage.setItem("data", JSON.stringify(copied));
+  }
+  function handleCheckout() {
+    navigate("/checkout");
   }
 
   return (
@@ -71,11 +76,17 @@ function Cart() {
               onClick={() => removeFromCart(value.id, value.color)}
             >
               Remove
+            </button>{" "}
+            <button
+              className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
+              onClick={handleCheckout}
+            >
+              Proceed to Checkout
             </button>
           </div>
         ))
       ) : (
-        <p></p>
+        <p> </p>
       )}
     </div>
   );

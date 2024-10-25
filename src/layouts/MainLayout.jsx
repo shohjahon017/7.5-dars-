@@ -21,7 +21,12 @@ function MainLayout({ children }) {
   function handleClick() {
     navigate("/cart");
   }
-
+  function handleSign() {
+    navigate("/register");
+  }
+  function handleLogin() {
+    navigate("/login");
+  }
   return (
     <div
       className={`container mx-auto ${
@@ -56,6 +61,18 @@ function MainLayout({ children }) {
             className="mx-2 hover:bg-gray-300 hover:rounded-md p-2 hover:text-white active:bg-black"
           >
             Cart
+          </a>{" "}
+          <a
+            href="/checkout"
+            className="mx-2 hover:bg-gray-300 hover:rounded-md p-2 hover:text-white active:bg-black"
+          >
+            Checkout
+          </a>{" "}
+          <a
+            href="/orders"
+            className="mx-2 hover:bg-gray-300 hover:rounded-md p-2 hover:text-white active:bg-black"
+          >
+            Orders
           </a>
         </div>
         <div className="flex gap-6">
@@ -77,8 +94,14 @@ function MainLayout({ children }) {
               </span>
             )}
           </div>
+        </div>{" "}
+        <div className="flex gap-2  text-blue-400 hover:link">
+          {" "}
+          <p onClick={handleSign}>Sign Up</p> /
+          <p onClick={handleLogin}>Login</p>
         </div>
       </div>
+
       <main>{children}</main>
     </div>
   );

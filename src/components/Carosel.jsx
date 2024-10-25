@@ -23,7 +23,7 @@ function Carosel() {
   return (
     <div className="carousel carousel-center bg-neutral rounded-box max-w-md space-x-4 p-4 mt-20">
       {products.map((product) => (
-        <div className="carousel-item " key={product.id}>
+        <div className="carousel-item" key={product.id}>
           <img
             src={product.attributes.image}
             alt={product.attributes.title}
